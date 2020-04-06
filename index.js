@@ -20,7 +20,6 @@ const users = ['Rumi', 'Sumi', 'Riya', 'Rita', "Rimi"]
 // GET
 app.get('/products', (req, res) => {
     client = new MongoClient(uri, { useNewUrlParser: true });
-       // database connection
         client.connect(err => {
         const collection = client.db("online-store").collection("items");
         collection.find().toArray((err, documents) =>{
@@ -34,7 +33,6 @@ app.get('/products', (req, res) => {
         });
         client.close();
     });
-    // database connection
 });
 
 
@@ -42,7 +40,6 @@ app.get('/product/:key', (req, res) => {
    const key = req.params.key;
  
    client = new MongoClient(uri, { useNewUrlParser: true });
-   // database connection
     client.connect(err => {
     const collection = client.db("online-store").collection("items");
     collection.find({key}).toArray((err, documents) =>{
@@ -56,7 +53,6 @@ app.get('/product/:key', (req, res) => {
     });
     client.close();
 });
-// database connectioname});
 })
 
 
@@ -66,7 +62,6 @@ app.post('/getProductByKey/:key', (req, res) => {
     console.log(itemkey);
   
     client = new MongoClient(uri, { useNewUrlParser: true });
-    // database connection
      client.connect(err => {
      const collection = client.db("online-store").collection("items");
      collection.find({key: {$in: itemkey}}).toArray((err, documents) =>{
@@ -80,17 +75,14 @@ app.post('/getProductByKey/:key', (req, res) => {
      });
      client.close();
  });
- // database connectioname});
  })
 
 // Delete
 // Update
 // POST
 app.post('/addProduct', (req, res) => {
-    // save to database
     const product = req.body;
     client = new MongoClient(uri, { useNewUrlParser: true });
-    // database connection
     client.connect(err => {
         const collection = client.db("online-store").collection("items");
         collection.insert(product, (err, result) =>{
@@ -109,13 +101,11 @@ app.post('/addProduct', (req, res) => {
 
 
 app.post('/placeOrder', (req, res) => {
-    // save to database
     const orderDetails = req.body;
     orderDetails.orderTime = new Date();
     console.log(orderDetails)
 
     client = new MongoClient(uri, { useNewUrlParser: true });
-    // database connection
     client.connect(err => {
         const collection = client.db("online-store").collection("orders");
         collection.insertOne(orderDetails, (err, result) =>{
@@ -129,8 +119,7 @@ app.post('/placeOrder', (req, res) => {
         });
         client.close();
     });
-    // database connection
 })
 
 const port = process.env.PORT || 1200;
-app.listen(port, () => console.log("Listenting to port 1200"))
+app.listen(port, () => console.log("Listening to port 1200"))
